@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <meta name="theme-color" content="#FFFFFF">
+
+
+
+    <title>Nu Mockup</title>
+
+    <style>
+
+        :root {
+
+            --bg-color: #FFFFFF;
+
+            --text-primary: #000000;
+
+            --text-secondary: #717171;
+
+            --text-green: #0F8C48;
+
+            --divider: #F0F0F0;
+
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+        }
+
+
+
+        * {
+
+            box-sizing: border-box;
+
+            margin: 0;
+
+            padding: 0;
+
+            -webkit-tap-highlight-color: transparent;
+
+            user-select: none; /* Evita que se seleccione texto al tocar */
+
+        }
+
+
+
+        body {
+
+            font-family: var(--font-family);
+
+            background-color: var(--bg-color);
+
+            color: var(--text-primary);
+
+            display: flex;
+
+            justify-content: center;
+
+            overflow: hidden; 
+
+            width: 100vw;
+
+            height: 100vh;
+
+            /* Soporte para altura dinámica en móviles */
+
+            height: 100dvh; 
+
+        }
+
+
+
+        .app-container {
+
+            width: 100%;
+
+            max-width: 420px;
+
+            height: 100%;
+
+            background: white;
+
+            position: relative;
+
+            overflow: hidden;
+
+        }
+
+
+
+        /* PANTALLAS */
+
+        .screen {
+
+            position: absolute;
+
+            top: 0;
+
+            left: 0;
+
+            width: 100%;
+
+            height: 100%;
+
+            background: white;
+
+            overflow-y: auto; 
+
+            -webkit-overflow-scrolling: touch;
+
+            padding-bottom: 80px; 
+
+            transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+
+
+        /* HEADER */
+
+        .header-nav {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 12px 16px;
+
+            height: 56px;
+
+            flex-shrink: 0;
+
+        }
+
+
+
+        .icon-btn {
+
+            background: none;
+
+            border: none;
+
+            cursor: pointer;
+
+            padding: 8px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+        }
+
+
+
+        .header-title-center {
+
+            font-size: 17px;
+
+            font-weight: 600;
+
+            color: var(--text-primary);
+
+        }
+
+
+
+        /* PANTALLA 1 */
+
+        #screen-list { z-index: 1; }
+
+
+
+        .main-header { padding: 0 24px 24px 24px; }
+
+        .main-title { font-size: 32px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.5px; }
+
+        .main-subtitle { font-size: 18px; color: var(--text-secondary); line-height: 1.4; font-weight: 400; }
+
+
+
+        .cdt-card {
+
+            padding: 20px 24px;
+
+            border-top: 1px solid var(--divider);
+
+            border-bottom: 1px solid var(--divider);
+
+            cursor: pointer;
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 8px;
+
+            background: white;
+
+        }
+
+
+
+        .card-top-text { font-size: 14px; color: var(--text-secondary); margin-bottom: 4px; }
+
+        .card-row-bottom { display: flex; justify-content: space-between; align-items: center; }
+
+        .money-group { display: flex; align-items: center; gap: 8px; }
+
+        .card-amount { font-size: 18px; font-weight: 600; }
+
+        .card-gain { font-size: 16px; color: var(--text-green); font-weight: 500; display: flex; align-items: center; gap: 2px; }
+
+        .card-right { display: flex; align-items: center; gap: 8px; }
+
+        .card-percent { font-size: 16px; font-weight: 600; }
+
+        .chevron-icon { color: var(--text-primary); }
+
+
+
+        /* PANTALLA 2 */
+
+        #screen-detail {
+
+            z-index: 2;
+
+            transform: translateX(100%);
+
+            background: white;
+
+        }
+
+
+
+        #screen-detail.active { transform: translateX(0); }
+
+
+
+        .hero-section { padding: 16px 24px 12px 24px; }
+
+        .hero-section h1 { font-size: 28px; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 8px; }
+
+        .subtitle-detail { font-size: 16px; color: var(--text-secondary); }
+
+        .subtitle-detail strong { color: #444; font-weight: 600; }
+
+
+
+        .balance-hero { padding: 20px 24px 32px 24px; }
+
+        .balance-label { font-size: 14px; font-weight: 600; margin-bottom: 8px; display: block; }
+
+        .balance-amount { font-size: 32px; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 8px; }
+
+        .balance-gain { color: var(--text-green); font-size: 16px; font-weight: 500; display: flex; align-items: center; gap: 4px; }
+
+
+
+        .data-list { padding: 0 24px; display: flex; flex-direction: column; gap: 20px; }
+
+        .data-row { display: flex; justify-content: space-between; align-items: baseline; font-size: 15px; }
+
+        .row-label { font-weight: 600; color: var(--text-primary); flex: 1; }
+
+        .row-value { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--text-secondary); }
+
+
+
+        .text-green { color: var(--text-green); }
+
+        .text-black { color: var(--text-primary); font-weight: 600; }
+
+        .text-gray { color: var(--text-secondary); }
+
+
+
+        .more-details { margin-top: 40px; padding: 0 24px 0px 24px; }
+
+        .section-title { font-size: 20px; font-weight: 600; margin-bottom: 24px; }
+
+        .arrow-up { font-size: 18px; line-height: 1; }
+
+
+
+        .home-indicator {
+
+            position: fixed;
+
+            bottom: 8px;
+
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            width: 135px;
+
+            height: 5px;
+
+            background-color: #000;
+
+            border-radius: 100px;
+
+            opacity: 0.8;
+
+            z-index: 100;
+
+            pointer-events: none;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+
+    <div class="app-container">
+
+
+
+        <div id="screen-list" class="screen">
+
+            <header class="header-nav">
+
+                <button class="icon-btn">
+
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+
+                </button>
+
+                <div class="header-spacer"></div>
+
+                <button class="icon-btn">
+
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5F5F5F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+
+                </button>
+
+            </header>
+
+
+
+            <div class="main-header">
+
+                <div class="main-title">Mis CDT Nu</div>
+
+                <div class="main-subtitle">Consulta cuánto crece tu dinero y cuándo podrás usarlo.</div>
+
+            </div>
+
+
+
+            <div class="cdt-card" onclick="openDetail()">
+
+                <div class="card-top-text">Invertido hasta el 18 FEB 2027</div>
+
+                <div class="card-row-bottom">
+
+                    <div class="money-group">
+
+                        <span class="card-amount">$ 10.827.331,90</span>
+
+                        <span class="card-gain"><span class="arrow-up">↑</span> $ 651.335,79</span>
+
+                    </div>
+
+                    <div class="card-right">
+
+                        <span class="card-percent">9,40%</span>
+
+                        <svg class="chevron-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div id="screen-detail" class="screen">
+
+            <header class="header-nav">
+
+                <button class="icon-btn" onclick="closeDetail()">
+
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5F5F5F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+
+                </button>
+
+                <div class="header-title-center">CDT</div>
+
+                <button class="icon-btn">
+
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5F5F5F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+
+                </button>
+
+            </header>
+
+
+
+            <section class="hero-section">
+
+                <h1>CDT Nu</h1>
+
+                <div class="subtitle-detail">En tu Cajita <strong>CDTA</strong></div>
+
+            </section>
+
+
+
+            <section class="balance-hero">
+
+                <span class="balance-label">Total neto</span>
+
+                <div class="balance-amount">$ 10.827.331,90</div>
+
+                <div class="balance-gain"><span class="arrow-up">↑</span> $ 651.335,79</div>
+
+            </section>
+
+
+
+            <section class="data-list">
+
+                <div class="data-row"><span class="row-label">Valor invertido</span><span class="row-value text-gray">$ 10.175.996,11</span></div>
+
+                <div class="data-row"><span class="row-label">Tasa de interés</span><span class="row-value text-green">9,40% efectivo anual</span></div>
+
+                <div class="data-row"><span class="row-label">Rendimiento bruto actual</span><span class="row-value text-green">+ $ 672.141,33</span></div>
+
+                <div class="data-row"><span class="row-label">Retención en la fuente</span><span class="row-value text-gray">- $ 20.805,54</span></div>
+
+                <div class="data-row"><span class="row-label">Rendimiento neto actual</span><span class="row-value text-green">+ $ 651.335,79</span></div>
+
+                <div class="data-row"><span class="row-label">Total neto actual</span><span class="row-value text-black">$ 10.827.331,90</span></div>
+
+            </section>
+
+
+
+            <section class="more-details">
+
+                <h2 class="section-title">Más detalles</h2>
+
+                <div class="data-list" style="padding: 0;">
+
+                    <div class="data-row"><span class="row-label">Fecha de apertura</span><span class="row-value text-gray">17 AGO 2026</span></div>
+
+                    <div class="data-row"><span class="row-label">Fecha de vencimiento</span><span class="row-value text-gray">18 FEB 2027</span></div>
+
+                    <div class="data-row"><span class="row-label">Renovación automática</span><span class="row-value text-gray">Si</span></div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+
+        <div class="home-indicator"></div>
+
+    </div>
+
+
+
+    <script>
+
+        function openDetail() {
+
+            document.getElementById('screen-detail').classList.add('active');
+
+        }
+
+
+
+        function closeDetail() {
+
+            document.getElementById('screen-detail').classList.remove('active');
+
+        }
+
+
+
+        // --- SCRIPT PARA FULL SCREEN ---
+
+        // Al tocar cualquier parte de la pantalla, se activa el modo pantalla completa
+
+        document.body.addEventListener("click", function() {
+
+            if (!document.fullscreenElement) {
+
+                document.documentElement.requestFullscreen().catch((err) => {
+
+                    console.log("Error al intentar pantalla completa: ", err);
+
+                });
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>
